@@ -36,12 +36,12 @@ namespace Final.Models
     partial void InsertCustomer(Customer instance);
     partial void UpdateCustomer(Customer instance);
     partial void DeleteCustomer(Customer instance);
-    partial void InsertFood(Food instance);
-    partial void UpdateFood(Food instance);
-    partial void DeleteFood(Food instance);
     partial void InsertMovy(Movy instance);
     partial void UpdateMovy(Movy instance);
     partial void DeleteMovy(Movy instance);
+    partial void InsertFood(Food instance);
+    partial void UpdateFood(Food instance);
+    partial void DeleteFood(Food instance);
     partial void InsertOrderDetail(OrderDetail instance);
     partial void UpdateOrderDetail(OrderDetail instance);
     partial void DeleteOrderDetail(OrderDetail instance);
@@ -88,12 +88,12 @@ namespace Final.Models
 		{
 			OnCreated();
 		}
+
         public DataClassesDataContext() :
               base(global::System.Configuration.ConfigurationManager.ConnectionStrings["CinemaBookingSystemConnectionString"].ConnectionString, mappingSource)
         {
             OnCreated();
         }
-
 
         public System.Data.Linq.Table<Cinema> Cinemas
 		{
@@ -111,19 +111,19 @@ namespace Final.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Food> Foods
-		{
-			get
-			{
-				return this.GetTable<Food>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Movy> Movies
 		{
 			get
 			{
 				return this.GetTable<Movy>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Food> Foods
+		{
+			get
+			{
+				return this.GetTable<Food>();
 			}
 		}
 		
@@ -588,196 +588,6 @@ namespace Final.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Foods")]
-	public partial class Food : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _FoodID;
-		
-		private string _FoodName;
-		
-		private double _Price;
-		
-		private string _Description;
-		
-		private EntitySet<OrderDetail> _OrderDetails;
-		
-		private EntitySet<TemporaryReservation> _TemporaryReservations;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnFoodIDChanging(int value);
-    partial void OnFoodIDChanged();
-    partial void OnFoodNameChanging(string value);
-    partial void OnFoodNameChanged();
-    partial void OnPriceChanging(double value);
-    partial void OnPriceChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    #endregion
-		
-		public Food()
-		{
-			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
-			this._TemporaryReservations = new EntitySet<TemporaryReservation>(new Action<TemporaryReservation>(this.attach_TemporaryReservations), new Action<TemporaryReservation>(this.detach_TemporaryReservations));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int FoodID
-		{
-			get
-			{
-				return this._FoodID;
-			}
-			set
-			{
-				if ((this._FoodID != value))
-				{
-					this.OnFoodIDChanging(value);
-					this.SendPropertyChanging();
-					this._FoodID = value;
-					this.SendPropertyChanged("FoodID");
-					this.OnFoodIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodName", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
-		public string FoodName
-		{
-			get
-			{
-				return this._FoodName;
-			}
-			set
-			{
-				if ((this._FoodName != value))
-				{
-					this.OnFoodNameChanging(value);
-					this.SendPropertyChanging();
-					this._FoodName = value;
-					this.SendPropertyChanged("FoodName");
-					this.OnFoodNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
-		public double Price
-		{
-			get
-			{
-				return this._Price;
-			}
-			set
-			{
-				if ((this._Price != value))
-				{
-					this.OnPriceChanging(value);
-					this.SendPropertyChanging();
-					this._Price = value;
-					this.SendPropertyChanged("Price");
-					this.OnPriceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Food_OrderDetail", Storage="_OrderDetails", ThisKey="FoodID", OtherKey="FoodID")]
-		public EntitySet<OrderDetail> OrderDetails
-		{
-			get
-			{
-				return this._OrderDetails;
-			}
-			set
-			{
-				this._OrderDetails.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Food_TemporaryReservation", Storage="_TemporaryReservations", ThisKey="FoodID", OtherKey="FoodID")]
-		public EntitySet<TemporaryReservation> TemporaryReservations
-		{
-			get
-			{
-				return this._TemporaryReservations;
-			}
-			set
-			{
-				this._TemporaryReservations.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_OrderDetails(OrderDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.Food = this;
-		}
-		
-		private void detach_OrderDetails(OrderDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.Food = null;
-		}
-		
-		private void attach_TemporaryReservations(TemporaryReservation entity)
-		{
-			this.SendPropertyChanging();
-			entity.Food = this;
-		}
-		
-		private void detach_TemporaryReservations(TemporaryReservation entity)
-		{
-			this.SendPropertyChanging();
-			entity.Food = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Movies")]
 	public partial class Movy : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1088,6 +898,196 @@ namespace Final.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Foods")]
+	public partial class Food : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _FoodID;
+		
+		private string _FoodName;
+		
+		private double _Price;
+		
+		private string _Description;
+		
+		private EntitySet<OrderDetail> _OrderDetails;
+		
+		private EntitySet<TemporaryReservation> _TemporaryReservations;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnFoodIDChanging(int value);
+    partial void OnFoodIDChanged();
+    partial void OnFoodNameChanging(string value);
+    partial void OnFoodNameChanged();
+    partial void OnPriceChanging(double value);
+    partial void OnPriceChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public Food()
+		{
+			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
+			this._TemporaryReservations = new EntitySet<TemporaryReservation>(new Action<TemporaryReservation>(this.attach_TemporaryReservations), new Action<TemporaryReservation>(this.detach_TemporaryReservations));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int FoodID
+		{
+			get
+			{
+				return this._FoodID;
+			}
+			set
+			{
+				if ((this._FoodID != value))
+				{
+					this.OnFoodIDChanging(value);
+					this.SendPropertyChanging();
+					this._FoodID = value;
+					this.SendPropertyChanged("FoodID");
+					this.OnFoodIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodName", DbType="NVarChar(255) NOT NULL", CanBeNull=false)]
+		public string FoodName
+		{
+			get
+			{
+				return this._FoodName;
+			}
+			set
+			{
+				if ((this._FoodName != value))
+				{
+					this.OnFoodNameChanging(value);
+					this.SendPropertyChanging();
+					this._FoodName = value;
+					this.SendPropertyChanged("FoodName");
+					this.OnFoodNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float NOT NULL")]
+		public double Price
+		{
+			get
+			{
+				return this._Price;
+			}
+			set
+			{
+				if ((this._Price != value))
+				{
+					this.OnPriceChanging(value);
+					this.SendPropertyChanging();
+					this._Price = value;
+					this.SendPropertyChanged("Price");
+					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Food_OrderDetail", Storage="_OrderDetails", ThisKey="FoodID", OtherKey="FoodID")]
+		public EntitySet<OrderDetail> OrderDetails
+		{
+			get
+			{
+				return this._OrderDetails;
+			}
+			set
+			{
+				this._OrderDetails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Food_TemporaryReservation", Storage="_TemporaryReservations", ThisKey="FoodID", OtherKey="FoodID")]
+		public EntitySet<TemporaryReservation> TemporaryReservations
+		{
+			get
+			{
+				return this._TemporaryReservations;
+			}
+			set
+			{
+				this._TemporaryReservations.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Food = this;
+		}
+		
+		private void detach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.Food = null;
+		}
+		
+		private void attach_TemporaryReservations(TemporaryReservation entity)
+		{
+			this.SendPropertyChanging();
+			entity.Food = this;
+		}
+		
+		private void detach_TemporaryReservations(TemporaryReservation entity)
+		{
+			this.SendPropertyChanging();
+			entity.Food = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.OrderDetails")]
 	public partial class OrderDetail : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1125,6 +1125,10 @@ namespace Final.Models
 		private string _TicketTypeName;
 		
 		private System.Nullable<int> _ScreeningID;
+		
+		private string _FoodName;
+		
+		private System.Nullable<int> _FoodQuantity;
 		
 		private EntityRef<Cinema> _Cinema;
 		
@@ -1176,6 +1180,10 @@ namespace Final.Models
     partial void OnTicketTypeNameChanged();
     partial void OnScreeningIDChanging(System.Nullable<int> value);
     partial void OnScreeningIDChanged();
+    partial void OnFoodNameChanging(string value);
+    partial void OnFoodNameChanged();
+    partial void OnFoodQuantityChanging(System.Nullable<int> value);
+    partial void OnFoodQuantityChanged();
     #endregion
 		
 		public OrderDetail()
@@ -1534,6 +1542,46 @@ namespace Final.Models
 					this._ScreeningID = value;
 					this.SendPropertyChanged("ScreeningID");
 					this.OnScreeningIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodName", DbType="NVarChar(255)")]
+		public string FoodName
+		{
+			get
+			{
+				return this._FoodName;
+			}
+			set
+			{
+				if ((this._FoodName != value))
+				{
+					this.OnFoodNameChanging(value);
+					this.SendPropertyChanging();
+					this._FoodName = value;
+					this.SendPropertyChanged("FoodName");
+					this.OnFoodNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodQuantity", DbType="Int")]
+		public System.Nullable<int> FoodQuantity
+		{
+			get
+			{
+				return this._FoodQuantity;
+			}
+			set
+			{
+				if ((this._FoodQuantity != value))
+				{
+					this.OnFoodQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._FoodQuantity = value;
+					this.SendPropertyChanged("FoodQuantity");
+					this.OnFoodQuantityChanged();
 				}
 			}
 		}
@@ -3037,6 +3085,10 @@ namespace Final.Models
 		
 		private System.Nullable<System.DateTime> _ExpirationTime;
 		
+		private string _FoodName;
+		
+		private System.Nullable<int> _FoodQuantity;
+		
 		private EntityRef<Customer> _Customer;
 		
 		private EntityRef<Food> _Food;
@@ -3085,6 +3137,10 @@ namespace Final.Models
     partial void OnScreeningTimeChanged();
     partial void OnExpirationTimeChanging(System.Nullable<System.DateTime> value);
     partial void OnExpirationTimeChanged();
+    partial void OnFoodNameChanging(string value);
+    partial void OnFoodNameChanged();
+    partial void OnFoodQuantityChanging(System.Nullable<int> value);
+    partial void OnFoodQuantityChanged();
     #endregion
 		
 		public TemporaryReservation()
@@ -3468,6 +3524,46 @@ namespace Final.Models
 					this._ExpirationTime = value;
 					this.SendPropertyChanged("ExpirationTime");
 					this.OnExpirationTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodName", DbType="NVarChar(255)")]
+		public string FoodName
+		{
+			get
+			{
+				return this._FoodName;
+			}
+			set
+			{
+				if ((this._FoodName != value))
+				{
+					this.OnFoodNameChanging(value);
+					this.SendPropertyChanging();
+					this._FoodName = value;
+					this.SendPropertyChanged("FoodName");
+					this.OnFoodNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FoodQuantity", DbType="Int")]
+		public System.Nullable<int> FoodQuantity
+		{
+			get
+			{
+				return this._FoodQuantity;
+			}
+			set
+			{
+				if ((this._FoodQuantity != value))
+				{
+					this.OnFoodQuantityChanging(value);
+					this.SendPropertyChanging();
+					this._FoodQuantity = value;
+					this.SendPropertyChanged("FoodQuantity");
+					this.OnFoodQuantityChanged();
 				}
 			}
 		}

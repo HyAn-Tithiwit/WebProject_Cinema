@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using Final.Models;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Final.Controllers
 {
@@ -85,33 +87,29 @@ namespace Final.Controllers
 
             return View(cartItems);
         }
-
-        public ActionResult TempReservationsCart()
+        public ActionResult TemporaryCart()
         {
-            int? customerId = Session["CustomerID"] as int?;
-            string sessionId = Session.SessionID; // Dùng Session.SessionID thay vì cookie
+            string sessionId = Session.SessionID;
 
-            List<TemporaryReservation> reservations = new List<TemporaryReservation>();
+            var cartItems = db.TemporaryReservations
+                .Where(tr => tr.SessionID == sessionId && tr.ExpirationTime > DateTime.Now)
+                .Select(tr => new TempCartViewModel
+                {
+                    ReservationID = tr.ReservationID,
+                    MovieTitle = tr.MovieTitle,
+                    CinemaName = tr.CinemaName,
+                    SeatNumber = tr.SeatID != null ? db.Seats.Where(s => s.SeatID == tr.SeatID).Select(s => s.SeatNumber).FirstOrDefault() : "-",
+                    TicketTypeName = tr.TicketTypeID != null ? db.TicketTypes.Where(t => t.TicketTypeID == tr.TicketTypeID).Select(t => t.TypeName).FirstOrDefault() : "-",
+                    Price = tr.Price,
+                    ScreeningTime = tr.ScreeningTime,
+                    FoodName = tr.FoodID != null ? db.Foods.Where(f => f.FoodID == tr.FoodID).Select(f => f.FoodName).FirstOrDefault() : "-",
+                    FoodQuantity = tr.FoodQuantity ?? 0,
+                    ExpirationTime = tr.ExpirationTime
+                })
+                .ToList();
 
-            if (customerId.HasValue && customerId.Value > 0)
-            {
-                // Lấy dữ liệu nếu người dùng đã đăng nhập
-                reservations = db.TemporaryReservations
-                                 .Where(r => r.CustomerID == customerId.Value)
-                                 .ToList();
-            }
-            else
-            {
-                // Lấy dữ liệu nếu người dùng chưa đăng nhập
-                reservations = db.TemporaryReservations
-                                 .Where(r => r.SessionID == sessionId)
-                                 .ToList();
-            }
-
-            return View(reservations);
+            return View(cartItems);
         }
-
-
 
 
         [HttpPost]

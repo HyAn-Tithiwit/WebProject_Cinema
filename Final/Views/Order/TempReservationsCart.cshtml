@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Final.Models.TemporaryReservation>
+﻿@model IEnumerable<Final.Models.TempCartViewModel>
 
 @{
-    ViewBag.Title = "TempReservationsCart";
+    ViewBag.Title = "Giỏ hàng tạm thời";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,6 +23,8 @@ else
                 <th>Loại vé</th>
                 <th>Giá</th>
                 <th>Suất chiếu</th>
+                <th>Thức ăn</th>
+                <th>Số lượng</th>
                 <th>Thời gian còn lại</th>
             </tr>
         </thead>
@@ -37,23 +39,19 @@ else
                     <td>@(string.IsNullOrEmpty(item.TicketTypeName) ? "-" : item.TicketTypeName)</td>
                     <td>@item.Price VNĐ</td>
                     <td>@item.ScreeningTime.ToString("HH:mm dd/MM/yyyy")</td>
+                    <td>@(string.IsNullOrEmpty(item.FoodName) ? "-" : item.FoodName)</td>
+                    <td>@(item.FoodQuantity > 0 ? item.FoodQuantity.ToString() : "-")</td>
                     <td>
-                        @if (item.ExpirationTime.HasValue && item.ExpirationTime.Value >= new DateTime(1753, 1, 1))
-                        {
-                            <span class="countdown" data-expire="@item.ExpirationTime.Value.ToString("yyyy-MM-ddTHH:mm:ss")"></span>
+                        @{
+                            var expireTime = item.ExpirationTime.HasValue ? item.ExpirationTime.Value : DateTime.Now.AddMinutes(5);
                         }
-                        else
-                        {
-                            <span class="text-danger">Không hợp lệ</span>
-                        }
+                        <span class="countdown" data-expire="@expireTime.ToString("yyyy-MM-ddTHH:mm:ss")"></span>
                     </td>
-
                 </tr>
             }
         </tbody>
     </table>
 
-    <!-- Checkout button -->
     <button id="checkoutBtn" class="btn btn-success">Thanh toán</button>
 }
 
@@ -79,11 +77,11 @@ else
                 var diff = Math.floor((expireDate - now) / 1000);
 
                 if (diff <= 0) {
-                    $(this).text("Hết hạn");
+                    $(this).text("Hết hạn").addClass("text-danger");
                 } else {
                     var minutes = Math.floor(diff / 60);
                     var seconds = diff % 60;
-                    $(this).text(minutes + "m " + seconds + "s");
+                    $(this).text(minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s");
                 }
             });
         }
@@ -105,5 +103,4 @@ else
         });
     });
     </script>
-
 }

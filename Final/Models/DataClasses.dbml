@@ -20,16 +20,6 @@
       <Association Name="Customer_TemporaryReservation" Member="TemporaryReservations" ThisKey="CustomerID" OtherKey="CustomerID" Type="TemporaryReservation" />
     </Type>
   </Table>
-  <Table Name="dbo.Foods" Member="Foods">
-    <Type Name="Food">
-      <Column Name="FoodID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FoodName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Association Name="Food_OrderDetail" Member="OrderDetails" ThisKey="FoodID" OtherKey="FoodID" Type="OrderDetail" />
-      <Association Name="Food_TemporaryReservation" Member="TemporaryReservations" ThisKey="FoodID" OtherKey="FoodID" Type="TemporaryReservation" />
-    </Type>
-  </Table>
   <Table Name="dbo.Movies" Member="Movies">
     <Type Name="Movy">
       <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -43,6 +33,16 @@
       <Column Name="TrailerLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Association Name="Movy_OrderDetail" Member="OrderDetails" ThisKey="MovieID" OtherKey="MovieID" Type="OrderDetail" />
       <Association Name="Movy_Screening" Member="Screenings" ThisKey="MovieID" OtherKey="MovieID" Type="Screening" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Foods" Member="Foods">
+    <Type Name="Food">
+      <Column Name="FoodID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FoodName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Food_OrderDetail" Member="OrderDetails" ThisKey="FoodID" OtherKey="FoodID" Type="OrderDetail" />
+      <Association Name="Food_TemporaryReservation" Member="TemporaryReservations" ThisKey="FoodID" OtherKey="FoodID" Type="TemporaryReservation" />
     </Type>
   </Table>
   <Table Name="dbo.OrderDetails" Member="OrderDetails">
@@ -63,6 +63,8 @@
       <Column Name="SeatNumber" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
       <Column Name="TicketTypeName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="ScreeningID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FoodName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="FoodQuantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Cinema_OrderDetail" Member="Cinema" ThisKey="CinemaID" OtherKey="CinemaID" Type="Cinema" IsForeignKey="true" />
       <Association Name="Food_OrderDetail" Member="Food" ThisKey="FoodID" OtherKey="FoodID" Type="Food" IsForeignKey="true" />
       <Association Name="Movy_OrderDetail" Member="Movy" ThisKey="MovieID" OtherKey="MovieID" Type="Movy" IsForeignKey="true" />
@@ -146,6 +148,8 @@
       <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="ScreeningTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="ExpirationTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FoodName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="FoodQuantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Customer_TemporaryReservation" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
       <Association Name="Food_TemporaryReservation" Member="Food" ThisKey="FoodID" OtherKey="FoodID" Type="Food" IsForeignKey="true" />
       <Association Name="Screening_TemporaryReservation" Member="Screening" ThisKey="ScreeningID" OtherKey="ScreeningID" Type="Screening" IsForeignKey="true" />

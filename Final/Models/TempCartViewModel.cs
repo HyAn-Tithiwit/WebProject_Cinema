@@ -29,5 +29,7 @@ namespace Final.Models
 
         // ✅ Thêm ExpirationTime để quản lý thời gian hết hạn của TempCart
         public DateTime? ExpirationTime { get; set; }
+        public string FoodName { get; set; }
+        public int FoodQuantity { get; set; }
     }
 }

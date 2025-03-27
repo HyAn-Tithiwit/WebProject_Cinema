@@ -329,45 +329,25 @@ namespace Final.Controllers
             seats = seats ?? new List<int>();
             foods = foods ?? new List<FoodOrder>();
 
-            // Validate ticket type
             if (!ticketTypeId.HasValue)
             {
                 return Json(new { success = false, message = "Loại vé không được xác định!" });
             }
 
-            // Fetch screening details
             var screening = db.Screenings.FirstOrDefault(s => s.ScreeningID == screeningId);
             if (screening == null)
             {
                 return Json(new { success = false, message = "Không tìm thấy suất chiếu!" });
             }
 
-            // Validate screening time
-            if (screening.StartTime < (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue ||
-                screening.StartTime > (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue)
-            {
-                return Json(new { success = false, message = "Thời gian chiếu không hợp lệ!" });
-            }
-            // Get the room details from the screening
             var room = db.Rooms.FirstOrDefault(r => r.RoomID == screening.RoomID);
-            if (room == null)
-            {
-                return Json(new { success = false, message = "Room not found!" });
-            }
-            // Get the cinema details from the room
             var cinema = db.Cinemas.FirstOrDefault(c => c.CinemaID == room.CinemaID);
-            if (cinema == null)
+            var movie = db.Movies.FirstOrDefault(m => m.MovieID == screening.MovieID);
+            if (room == null || cinema == null || movie == null)
             {
-                return Json(new { success = false, message = "Cinema not found!" });
+                return Json(new { success = false, message = "Dữ liệu phim/rạp/phòng không hợp lệ!" });
             }
 
-            // Get the movie details from the screening
-            var movie = db.Movies.FirstOrDefault(m => m.MovieID == screening.MovieID);
-            if (movie == null)
-            {
-                return Json(new { success = false, message = "Movie not found!" });
-            }
-            // Check for already booked or reserved seats
             var bookedSeats = db.OrderDetails
                 .Where(od => od.ScreeningID == screeningId && seats.Contains((int)od.SeatID))
                 .Select(od => od.SeatID)
@@ -386,7 +366,6 @@ namespace Final.Controllers
 
             string sessionId = (customerId == null || customerId == 0) ? Session.SessionID : null;
 
-            // Ensure database connection is open
             if (db.Connection.State == System.Data.ConnectionState.Closed)
             {
                 db.Connection.Open();
@@ -397,7 +376,6 @@ namespace Final.Controllers
                 try
                 {
                     db.Transaction = transaction;
-
                     DateTime now = DateTime.Now;
                     DateTime expirationTime = now.AddMinutes(5);
 
@@ -409,58 +387,78 @@ namespace Final.Controllers
 
                     if (customerId != null && customerId != 0)
                     {
-                        // Authenticated user: Create an order
+                        // 🔹 **Người dùng đã đăng nhập -> Lưu vào Order**
                         var order = new Order
                         {
                             CustomerID = customerId.Value,
                             ScreeningID = screeningId,
                             OrderDate = now,
-                            PaymentStatus = "Pending"
+                            PaymentStatus = "Completed",
+                            TotalAmount = 0
                         };
                         db.Orders.InsertOnSubmit(order);
                         db.SubmitChanges();
 
+                        // 🔹 **Lưu từng vé vào OrderDetails**
                         foreach (var seatId in seats)
                         {
+                            var seat = db.Seats.FirstOrDefault(s => s.SeatID == seatId);
                             db.OrderDetails.InsertOnSubmit(new OrderDetail
                             {
                                 OrderID = order.OrderID,
                                 ItemType = "Ticket",
                                 SeatID = seatId,
+                                SeatNumber = seat?.SeatNumber,
                                 TicketTypeID = ticketTypeId.Value,
+                                TicketTypeName = ticketType.TypeName,
                                 Price = ticketType.DefaultPrice,
-                                Quantity = 1
+                                Quantity = 1,
+                                ScreeningID = screeningId,
+                                ScreeningTime = screening.StartTime,
+                                MovieID = movie.MovieID,
+                                MovieTitle = movie.Title,
+                                CinemaID = cinema.CinemaID,
+                                CinemaName = cinema.Name
                             });
                         }
 
-                        foreach (var food in foods.Where(f => f.Quantity > 0))
+                        // 🔹 **Lưu từng món ăn vào OrderDetails**
+                        // Lưu thức ăn vào OrderDetails
+                        var foodGroups = foods.GroupBy(f => f.FoodId);
+                        foreach (var food in foods)
                         {
                             var foodItem = db.Foods.FirstOrDefault(f => f.FoodID == food.FoodId);
                             if (foodItem != null)
                             {
-                                db.OrderDetails.InsertOnSubmit(new OrderDetail
+                                var orderDetail = new OrderDetail
                                 {
                                     OrderID = order.OrderID,
                                     ItemType = "Food",
                                     FoodID = food.FoodId,
-                                    Quantity = food.Quantity,
+                                    FoodName = foodItem.FoodName,
+                                    FoodQuantity = food.Quantity,
                                     Price = foodItem.Price * food.Quantity
-                                });
+                                };
+                                db.OrderDetails.InsertOnSubmit(orderDetail);
+                                db.SubmitChanges(); // 🔥 Lưu từng dòng thay vì chờ cuối cùng
+                                Console.WriteLine($"Đã lưu {foodItem.FoodName} - {food.Quantity} phần");
                             }
                         }
+                        db.SubmitChanges(); // 🔥 Đảm bảo lệnh này chạy sau khi thêm thức ăn
 
+
+                        // Cập nhật tổng tiền
+                        order.TotalAmount = db.OrderDetails
+                            .Where(od => od.OrderID == order.OrderID)
+                            .Sum(od => od.Price);
                         db.SubmitChanges();
+
                         transaction.Commit();
                         return Json(new { success = true, message = "Đặt vé thành công! Đơn hàng đã được tạo." });
                     }
                     else
                     {
-                        // Guest user: Create temporary reservations
-                        if (movie == null)
-                        {
-                            return Json(new { success = false, message = "Không tìm thấy thông tin phim!" });
-                        }
-
+                        // 🔹 **Người dùng chưa đăng nhập -> Lưu vào TemporaryReservations**
                         foreach (var seatId in seats)
                         {
                             db.TemporaryReservations.InsertOnSubmit(new TemporaryReservation
@@ -474,34 +472,39 @@ namespace Final.Controllers
                                 Quantity = 1,
                                 ExpirationTime = expirationTime,
                                 ScreeningTime = screening.StartTime,
-                                MovieTitle = movie.Title,      // Movie title from Movies table
-                                CinemaName = cinema.Name       // Cinema name from Cinemas table
+                                MovieTitle = movie.Title,
+                                CinemaName = cinema.Name
                             });
-
-                            db.SubmitChanges();
                         }
 
-                        foreach (var food in foods.Where(f => f.Quantity > 0))
+                        // Lưu thức ăn vào TemporaryReservations
+                        var tempFoodGroups = foods.GroupBy(f => f.FoodId);
+                        foreach (var foodGroup in tempFoodGroups)
                         {
-                            var foodItem = db.Foods.FirstOrDefault(f => f.FoodID == food.FoodId);
+                            var foodItem = db.Foods.FirstOrDefault(f => f.FoodID == foodGroup.Key);
                             if (foodItem != null)
                             {
+                                int totalQuantity = foodGroup.Sum(f => f.Quantity);
                                 db.TemporaryReservations.InsertOnSubmit(new TemporaryReservation
                                 {
                                     SessionID = sessionId,
                                     ScreeningID = screeningId,
-                                    FoodID = food.FoodId,
-                                    Quantity = food.Quantity,
-                                    Price = foodItem.Price * food.Quantity,
+                                    FoodID = foodItem.FoodID,
+                                    FoodName = foodItem.FoodName,
+                                    FoodQuantity = totalQuantity,
+                                    Price = foodItem.Price * totalQuantity,
                                     ItemType = "Food",
                                     ExpirationTime = expirationTime,
                                     ScreeningTime = screening.StartTime,
-                                    MovieTitle = movie.Title // Required field to prevent NULL error
+                                    MovieTitle = movie.Title
                                 });
                             }
+                            else
+                            {
+                                return Json(new { success = false, message = $"Không tìm thấy thức ăn ID {foodGroup.Key}!" });
+                            }
                         }
-
-                        db.SubmitChanges();
+                        db.SubmitChanges(); // 🔥 Đảm bảo lệnh này chạy sau khi thêm thức ăn
                         transaction.Commit();
                         return Json(new { success = true, message = "Chọn vé đã được lưu vào giỏ hàng tạm thời (5 phút)!" });
                     }
