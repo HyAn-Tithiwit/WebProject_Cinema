@@ -1,0 +1,380 @@
+﻿@model Final.Models.MovieDetailViewModel
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Thông tin phim + Trailer -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Cột hình ảnh -->
+        <div class="col-md-6 text-center">
+            <img src="@Model.Image" alt="@Model.Title" class="img-fluid rounded movie-poster" />
+        </div>
+        <!-- Cột nội dung -->
+        <div class="col-md-6">
+            <h2><strong>@Model.Title</strong> <span class="badge bg-secondary">@Model.AgeRating</span></h2>
+            <ul class="list-unstyled">
+                <li><strong>Thể loại:</strong> @Model.Genre</li>
+                <li><strong>Thời lượng:</strong> @Model.Duration phút</li>
+                <li>
+                    <strong>Ngày phát hành:</strong>
+                    @(Model.ReleaseDate?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")
+                </li>
+            </ul>
+            <p class="movie-description"><h3>NỘI DUNG PHIM: </h3>@Model.Description</p>
+
+            @if (!string.IsNullOrEmpty(Model.TrailerLink))
+            {
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#trailerModal" data-trailer="@Model.TrailerLink">
+                    Xem Trailer
+                </button>
+            }
+            <a href="@Url.Action("Index", "Movie")" class="btn btn-primary">Quay lại</a>
+        </div>
+    </div>
+</div>
+
+<!-- CHỨC NĂNG ĐẶT VÉ -->
+<hr>
+<h3 class="text-center mt-4">Đặt vé xem phim</h3>
+
+@if (Model.SelectedCinemaID == null)
+{
+    <!-- Nếu chưa có rạp được chọn, hiển thị dropdown chọn rạp -->
+    <div class="mt-3">
+        <label for="cinemaSelect"><strong>Chọn rạp:</strong></label>
+        <select id="cinemaSelect" class="form-control">
+            <option value="">-- Chọn rạp --</option>
+            @foreach (var cinema in Model.Cinemas)
+            {
+                <option value="@cinema.CinemaID">@cinema.Name - @cinema.Address</option>
+            }
+        </select>
+    </div>
+}
+else
+{
+    <!-- Nếu đã có rạp được chọn, hiển thị thông tin rạp -->
+    <div class="mt-3">
+        <label><strong>Rạp đã chọn:</strong></label>
+        @{
+            var selectedCinema = Model.Cinemas.FirstOrDefault(c => c.CinemaID == Model.SelectedCinemaID);
+        }
+    <p>
+        @if (selectedCinema != null)
+        {
+            @($"{selectedCinema.Name} - {selectedCinema.Address}")
+        }
+        else
+        {
+            <span>Chưa xác định</span>
+        }
+    </p>
+    </div>
+}
+
+<!-- Chọn Suất Chiếu -->
+<div class="mt-3">
+    <label for="screeningSelect"><strong>Chọn suất chiếu:</strong></label>
+    <select id="screeningSelect" class="form-control" disabled>
+        <option value="">-- Chọn suất chiếu --</option>
+    </select>
+</div>
+
+<!-- Chọn Loại Vé -->
+<div class="mt-3">
+    <label for="ticketTypeSelect"><strong>Chọn loại vé:</strong></label>
+    <select id="ticketTypeSelect" class="form-control">
+        <option value="">-- Chọn loại vé --</option>
+        @foreach (var ticket in Model.TicketTypes)
+        {
+            <option value="@ticket.TicketTypeID">@ticket.Name - @ticket.Price VNĐ</option>
+        }
+    </select>
+</div>
+
+<!-- Chọn Ghế -->
+<div class="mt-4">
+    <h5><strong>Chọn ghế:</strong></h5>
+    <div id="seatMap" class="d-flex flex-wrap"></div>
+    <p>
+        <strong>Ghi chú:</strong>
+        <span class="badge bg-secondary">Trắng</span>: Trống,
+        <span class="badge bg-warning">Vàng</span>: Đang chọn,
+        <span class="badge bg-dark">Xám</span>: Đã bán
+    </p>
+</div>
+
+<!-- Chọn Bắp Nước -->
+<div class="mt-4">
+    <h5><strong>Chọn bắp nước:</strong></h5>
+    <div class="row">
+        @foreach (var food in Model.Foods)
+        {
+            <div class="col-md-3 text-center">
+                <label>@food.FoodName - @food.Price VNĐ</label>
+                <div class="input-group">
+                    <button class="btn btn-outline-secondary decrease-quantity" type="button" data-foodid="@food.FoodID">-</button>
+                    <input type="number" class="form-control foodQuantity" data-foodid="@food.FoodID" data-price="@food.Price" value="0" min="0">
+                    <button class="btn btn-outline-secondary increase-quantity" type="button" data-foodid="@food.FoodID">+</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Nút Xác Nhận Đặt Vé -->
+<button id="confirmBooking" class="btn btn-success mt-4" disabled>Xác nhận đặt vé</button>
+
+<!-- Modal Trailer -->
+<div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="trailerModalLabel">Trailer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <iframe id="trailerFrame" frameborder="0" allowfullscreen style="width:100%; height:60vh; max-height:500px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        let selectedSeats = [];
+        let selectedFoods = [];
+        let timeout;
+
+        $(document).ready(function () {
+            // Nếu chưa chọn rạp, khi chọn sẽ load suất chiếu
+            $('#cinemaSelect').change(function () {
+                let cinemaId = $(this).val();
+                let movieId = @Model.MovieID;
+                $('#screeningSelect').prop("disabled", true).html('<option>Loading...</option>');
+                $("#seatMap").empty();
+                selectedSeats = [];
+                updateConfirmButton();
+                if (cinemaId) {
+                    $.getJSON('@Url.Action("GetScreenings", "Movie")', { cinemaId, movieId }, function (data) {
+                        let options = '<option value="">-- Chọn suất chiếu --</option>';
+                        data.forEach(s => options += `<option value="${s.ScreeningID}">${s.StartTime}</option>`);
+                        $('#screeningSelect').html(options).prop("disabled", false);
+                    }).fail(function () {
+                        alert("Lỗi khi tải suất chiếu!");
+                    });
+                }
+            });
+
+            // Khi chọn suất chiếu -> Load danh sách ghế
+            $('#screeningSelect').change(function () {
+                let screeningId = $(this).val();
+                selectedSeats = [];
+                updateConfirmButton();
+                $("#seatMap").empty();
+                if (screeningId) {
+                    $.getJSON('@Url.Action("GetSeats", "Movie")', { screeningId }, function (data) {
+                        renderSeats(data);
+                    }).fail(function () {
+                        alert("Lỗi khi tải danh sách ghế!");
+                    });
+                }
+                resetTimeout();
+            });
+
+            // Khi chọn bắp nước
+            $(document).ready(function () {
+                // Khi nhấn nút tăng số lượng
+                $(".increase-quantity").click(function () {
+                    let foodId = $(this).data("foodid");
+                    let input = $(`.foodQuantity[data-foodid='${foodId}']`);
+                    let newQuantity = parseInt(input.val()) + 1;
+                    input.val(newQuantity);
+                    updateSelectedFoods(foodId, newQuantity);
+                });
+
+                // Khi nhấn nút giảm số lượng
+                $(".decrease-quantity").click(function () {
+                    let foodId = $(this).data("foodid");
+                    let input = $(`.foodQuantity[data-foodid='${foodId}']`);
+                    let newQuantity = Math.max(0, parseInt(input.val()) - 1);
+                    input.val(newQuantity);
+                    updateSelectedFoods(foodId, newQuantity);
+                });
+
+                // Khi nhập số lượng thủ công
+                $(".foodQuantity").change(function () {
+                    let foodId = $(this).data("foodid");
+                    let newQuantity = Math.max(0, parseInt($(this).val()) || 0);
+                    $(this).val(newQuantity);
+                    updateSelectedFoods(foodId, newQuantity);
+                });
+
+                // Cập nhật danh sách món đã chọn
+                function updateSelectedFoods(foodId, quantity) {
+                    if (quantity > 0) {
+                        selectedFoods[foodId] = quantity;
+                    } else {
+                        delete selectedFoods[foodId];
+                    }
+                    updateConfirmButton();
+                }
+
+                // Cập nhật trạng thái nút đặt vé
+                function updateConfirmButton() {
+                    let hasFood = Object.keys(selectedFoods).length > 0;
+                    $("#confirmBooking").prop("disabled", selectedSeats.length === 0 && !hasFood);
+               }
+            });
+
+            // Xử lý đặt vé
+            $("#confirmBooking").click(function () {
+    let screeningId = $('#screeningSelect').val();
+    let ticketTypeId = $('#ticketTypeSelect').val();
+    let sessionId = sessionStorage.getItem('sessionId') || '';
+                let customerId = parseInt('@(Session["CustomerID"] ?? "0")');
+
+    if (selectedSeats.length === 0) {
+        alert("Vui lòng chọn ít nhất một ghế!");
+        return;
+    }
+
+    $.post('@Url.Action("ConfirmBooking", "Movie")', {
+        screeningId: screeningId,
+        ticketTypeId: ticketTypeId,
+        seats: selectedSeats,
+        foods: selectedFoods, // Gửi số lượng bắp nước
+        sessionId: customerId === 0 ? sessionId : null,
+        customerId: customerId !== 0 ? customerId : null
+    }, function (response) {
+        if (response.success) {
+            alert("Đặt vé thành công!");
+            window.location.href = customerId === 0 ? '@Url.Action("TempReservationsCart", "Order")' : '@Url.Action("OrderHistory", "Order")';
+        } else {
+            alert("Đặt vé thất bại! " + (response.message || ""));
+        }
+    }).fail(function (xhr) {
+        alert("Lỗi hệ thống: " + xhr.responseText);
+    });
+});
+        });
+
+        // Hàm hiển thị ghế
+        function renderSeats(data) {
+            data.sort((a, b) => {
+                let rowCompare = a.RowNumber.trim().localeCompare(b.RowNumber.trim());
+                return rowCompare !== 0 ? rowCompare : parseInt(a.ColumnNumber) - parseInt(b.ColumnNumber);
+            });
+            let groupedSeats = {};
+            data.forEach(seat => {
+                let row = seat.RowNumber.trim();
+                if (!groupedSeats[row]) groupedSeats[row] = [];
+                groupedSeats[row].push(seat);
+            });
+            let tableHtml = "<table class='seat-table' style='width:100%; border-collapse:collapse;'><tbody>";
+            Object.keys(groupedSeats).sort().forEach(row => {
+                tableHtml += "<tr>";
+                groupedSeats[row].forEach(seat => {
+                    let seatClass = seat.Status === "Sold" ? "bg-dark text-white" : "bg-light";
+                    let seatLabel = seat.RowNumber.trim() + seat.ColumnNumber;
+                    tableHtml += `<td style="padding: 5px;">
+                        <button class="seat btn ${seatClass} m-1" data-seatid="${seat.SeatID}" data-status="${seat.Status}">
+                            ${seatLabel}
+                        </button>
+                    </td>`;
+                });
+                tableHtml += "</tr>";
+            });
+            tableHtml += "</tbody></table>";
+            $("#seatMap").html(tableHtml);
+
+            // Sự kiện chọn ghế
+            $(".seat").click(function () {
+                let status = $(this).attr("data-status");
+                if (status === "Sold") return;
+                let seatId = $(this).attr("data-seatid");
+                if ($(this).hasClass("bg-warning")) {
+                    $(this).removeClass("bg-warning").addClass("bg-light");
+                    selectedSeats = selectedSeats.filter(s => s !== seatId);
+                } else {
+                    $(this).removeClass("bg-light").addClass("bg-warning");
+                    selectedSeats.push(seatId);
+                }
+                updateConfirmButton();
+                resetTimeout();
+            });
+        }
+
+        // Cập nhật trạng thái nút "Xác nhận đặt vé"
+        function updateConfirmButton() {
+            $("#confirmBooking").prop("disabled", selectedSeats.length === 0);
+        }
+
+        // Reset timeout 5 phút
+        function startCountdown(duration) {
+            let timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                $("#countdown").text(`Thời gian giữ vé: ${minutes}:${seconds}`);
+                if (--timer < 0) {
+                    alert("Hết thời gian giữ vé! Vui lòng chọn lại.");
+                    location.reload();
+                }
+            }, 1000);
+        }
+        startCountdown(300); // 5 phút
+
+    </script>
+
+    <script>
+        // Script cho modal trailer
+        document.addEventListener("DOMContentLoaded", function () {
+            var trailerModal = document.getElementById('trailerModal');
+            var trailerFrame = document.getElementById('trailerFrame');
+            trailerModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var trailerUrl = button.getAttribute('data-trailer');
+                if (trailerUrl.includes("youtu.be")) {
+                    var videoId = trailerUrl.split('/').pop();
+                    trailerUrl = "https://www.youtube.com/embed/" + videoId;
+                } else if (trailerUrl.includes("watch?v=")) {
+                    trailerUrl = trailerUrl.replace("watch?v=", "embed/");
+                }
+                trailerFrame.src = trailerUrl;
+            });
+            trailerModal.addEventListener('hidden.bs.modal', function () {
+                trailerFrame.src = "";
+            });
+        });
+    </script>
+}
+
+<style>
+    .seat {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .bg-warning {
+        background-color: yellow !important;
+    }
+
+    .bg-light {
+        background-color: white !important;
+        border: 1px solid #ccc;
+    }
+
+    .bg-dark {
+        background-color: gray !important;
+    }
+</style>

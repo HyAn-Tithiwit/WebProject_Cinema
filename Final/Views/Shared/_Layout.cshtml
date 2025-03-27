@@ -1,0 +1,270 @@
+﻿    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+        <style>
+            body {
+                background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+                color: white;
+                font-family: Inter, sans-serif;
+                line-height: 1.5;
+            }
+
+            .navbar {
+                background: linear-gradient(135deg, #1e3c72, #2a5298);
+            }
+
+                .navbar .nav-link {
+                    color: white !important;
+                }
+
+                    .navbar .nav-link:hover {
+                        color: #00ff99 !important;
+                    }
+
+            .container {
+                padding-top: 20px;
+            }
+
+            footer {
+                background: linear-gradient(30deg, #23418F 30%, #0d0a2c 60%, #4f43fb 100%);
+                color: white;
+                text-align: center;
+                padding: 10px;
+                margin-top: 20px;
+                border-top: 2px solid;
+                width: 100%;
+                position: relative;
+                left: 0;
+                bottom: 0;
+            }
+
+            .search-bar {
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+
+            #searchResults {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%; /* Để dropdown vừa với ô tìm kiếm */
+                background: white;
+                color: black;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                z-index: 1000;
+                display: none;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .search-results {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                .search-results li {
+                    padding: 10px;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                    .search-results li img {
+                        width: 40px;
+                        height: 60px;
+                        margin-right: 10px;
+                        vertical-align: middle;
+                    }
+
+                    .search-results li a {
+                        display: flex;
+                        align-items: center;
+                        text-decoration: none;
+                        color: black;
+                    }
+
+                    .search-results li:hover {
+                        background: #f0f0f0;
+                    }
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .dropbtn {
+                background-color: transparent;
+                color: #1e3c72;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+                padding: 5px 0;
+            }
+
+            .dropdown {
+                position: relative;
+                display: inline-block;
+                /* Đảm bảo container có z-index cao hơn banner */
+                z-index: 9999;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #fff;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+                z-index: 10000; /* z-index cao hơn để đảm bảo xuất hiện trên banner */
+            }
+
+                .dropdown-content a {
+                    color: #333;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    display: block;
+                }
+
+                    .dropdown-content a:hover {
+                        background-color: #f0f0f0;
+                    }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown:hover .dropbtn {
+                color: #FFD700; /* Màu vàng khi hover */
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- Head-bot: Thanh navigation -->
+        <div class="head-bot">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
+                <div class="container">
+                    @Html.ActionLink("Cinema", "Index", "Movie", new { area = "" }, new { @class = "navbar-brand" })
+                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                        <form id="searchForm" class="search-bar">
+                            <input type="text" id="searchInput" class="form-control me-2" placeholder="Tìm kiếm phim..." autocomplete="off">
+                            <button type="submit" class="btn btn-outline-light"><i class="fa fa-search"></i></button>
+                            <div id="searchResults"></div>
+                        </form>
+
+                        <div id="searchResults" class="search-results-container"></div>
+
+                        <ul class="navbar-nav">
+                            <li>
+                                <a href="@Url.Action("TempReservationsCart", "Order")" class="nav-link">
+                                    🛒 Giỏ hàng
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("OrderHistory", "Order")" class="nav-link">
+                                    📜 Lịch sử đặt hàng
+                                </a>
+                            </li>
+                            @if (Session["CustomerID"] == null)
+                            {
+                                <li>@Html.ActionLink("Đăng nhập", "Login", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                                <li>@Html.ActionLink("Đăng ký", "Register", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <span class="nav-link">Chào, @Session["CustomerName"]</span>
+                                </li>
+                                <li>@Html.ActionLink("Đăng xuất", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="container">
+            <div class="hd-bot-wr hd-regi-wr" style="display: flex; align-items: center; justify-content: space-between;">
+                <!-- Nhóm bên trái: chọn rạp và lịch chiếu -->
+                <div class="hd-bot-action-wrap" style="display: flex; align-items: center; gap: 30px;">
+                    <!-- Phần chọn rạp -->
+                    <div class="dropdown" style="position: relative; display: inline-block; z-index: 9999;">
+                        <button class="dropbtn">Chọn rạp</button>
+                        <div class="dropdown-content">
+                            <a href="/Place/Detail/1">Cinema Center (123 Đường Lê Lợi, Quận 1, TP.HCM)</a>
+                            <a href="/Place/Detail/2">Downtown Cinema (456 Đường Nguyễn Huệ, Quận 1, TP.HCM)</a>
+                            <a href="/Place/Detail/3">Mega Cinemas (789 Đường Trần Hưng Đạo, Quận 5, TP.HCM)</a>
+                        </div>
+                    </div>
+                    <!-- Phần lịch chiếu -->
+                    <div class="hd-bot-action-left" style="display: flex; align-items: center;">
+                        <a class="hd-bot-loca" href="/showtimes/" style="display: flex; align-items: center; gap: 5px;">
+                            <i class="fa-calendar fa-regular fa-location-dot"></i>
+                            <span class="txt">Lịch chiếu</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Nhóm bên phải: các liên kết khác -->
+                <div class="hd-bot-km" style="display: flex; align-items: center; gap: 20px;">
+                    <a class="link" href="/chuong-trinh-khuyen-mai/">Khuyến mãi</a>
+                    <a class="link" href="/to-chuc-su-kien/">Thuê sự kiện</a>
+                    @Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })
+                    @Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })
+                </div>
+            </div>
+        </div>
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+
+        </div>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
+    <script>
+        $(document).ready(function () {
+            $("#searchInput").on("keyup", function () {
+                var query = $(this).val();
+                if (query.length > 2) {
+                    $.getJSON("/Movie/SearchMovies", { query: query }, function (data) {
+                        var html = "";
+                        if (data.length > 0) {
+                            html += '<ul class="search-results">';
+                            $.each(data, function (i, movie) {
+                                html += `<li>
+                                        <a href="/Movie/Detail/${movie.MovieID}">
+                                            <img src="${movie.Image}" alt="${movie.Title}">
+                                            ${movie.Title}
+                                        </a>
+                                    </li>`;
+                            });
+                            html += '</ul>';
+                        } else {
+                            html = "<p>Không tìm thấy phim.</p>";
+                        }
+                        $("#searchResults").html(html).show();
+                    });
+                } else {
+                    $("#searchResults").hide();
+                }
+            });
+
+            $(document).on("click", function (e) {
+                if (!$(e.target).closest("#searchForm, #searchResults").length) {
+                    $("#searchResults").hide();
+                }
+            });
+        });
+
+    </script>

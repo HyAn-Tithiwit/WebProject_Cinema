@@ -1,0 +1,107 @@
+﻿@model PagedList.IPagedList<Final.Models.Movy>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "ComingSoon";
+    Layout = "~/Views/Shared/View.cshtml";  // Layout content-only (không header/footer) nếu cần
+}
+
+<div class="container my-4">
+    <h3 class="text-center">🎬 @ViewBag.Title</h3>
+    <div class="row">
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var movie in Model)
+            {
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="movie-card border rounded p-2 text-center shadow">
+                        @if (!string.IsNullOrEmpty(movie.AgeRating))
+                        {
+                            <span class="badge bg-warning">@movie.AgeRating</span>
+                        }
+                        <p>@movie.Genre</p>
+                        <div class="movie-poster position-relative overflow-hidden">
+                            <img src="@movie.Image"
+                                 alt="@movie.Title"
+                                 class="img-fluid rounded"
+                                 style="width: 100%; height: 400px; object-fit: cover; transition: transform 0.3s ease;" />
+                        </div>
+                        <div class="date-premiere">
+                            🎬 Khởi chiếu: @(movie.ReleaseDate.HasValue ? movie.ReleaseDate.Value.ToString("dd/MM/yyyy") : "N/A")
+                        </div>
+                        <div class="movie-info d-flex flex-column" style="height: 100%; justify-content: space-between;">
+                            <h5 class="fw-bold" style="min-height: 48px; display: flex; align-items: center;">
+                                @movie.Title
+                            </h5>
+                        </div>
+                        <div class="info-action mt-auto" style="display: grid; gap: 10px;">
+                            <button class="btn btn-primary btn-trailer" data-trailer="@movie.TrailerLink" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                                Xem Trailer
+                            </button>
+                            <!-- Link "Tìm Hiểu Thêm" dựa trên MovieID -->
+                            <a href="@Url.Action("More", "Movie", new { id = movie.MovieID })" class="btn btn-info">
+                                🔍 Tìm Hiểu Thêm
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p>Hiện chưa có phim sắp chiếu.</p>
+            </div>
+        }
+    </div>
+
+    <!-- Phân trang -->
+    @if (Model != null && Model.PageCount > 1)
+    {
+        <div class="text-center">
+            @Html.PagedListPager(Model, page => Url.Action("ComingSoon", new { page = page }))
+        </div>
+    }
+</div>
+
+<!-- Modal Trailer -->
+<div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="trailerModalLabel">Trailer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <iframe id="trailerFrame" frameborder="0" allowfullscreen style="width:100%; height:60vh; max-height:500px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var trailerModal = document.getElementById('trailerModal');
+            var trailerFrame = document.getElementById('trailerFrame');
+
+            trailerModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var trailerUrl = button.getAttribute('data-trailer');
+
+                // Chuyển đổi link YouTube sang dạng embed
+                if (trailerUrl.includes("youtu.be")) {
+                    var videoId = trailerUrl.split('/').pop();
+                    trailerUrl = "https://www.youtube.com/embed/" + videoId;
+                } else if (trailerUrl.includes("watch?v=")) {
+                    trailerUrl = trailerUrl.replace("watch?v=", "embed/");
+                }
+
+                trailerFrame.src = trailerUrl;
+            });
+
+            trailerModal.addEventListener('hidden.bs.modal', function () {
+                trailerFrame.src = "";
+            });
+        });
+    </script>
+}

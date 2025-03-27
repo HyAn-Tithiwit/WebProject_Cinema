@@ -1,0 +1,72 @@
+﻿@model Final.Models.Customer
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+<div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<form method="post" action="@Url.Action("Register", "Account")" onsubmit="return validatePassword()">
+    <div class="form-group">
+        <label for="FullName">Họ và tên</label>
+        <input type="text" name="FullName" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" name="Email" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Phone">Số điện thoại</label>
+        <input type="text" name="Phone" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="PasswordHash">Mật khẩu</label>
+        <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ConfirmPassword">Xác nhận mật khẩu</label>
+        <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Đăng ký</button>
+</form>
+
+<p>Đã có tài khoản? <a href="@Url.Action("Login", "Account")">Đăng nhập</a></p>
+
+<script>
+    function validatePassword() {
+        var password = document.getElementById("PasswordHash").value;
+        var confirmPassword = document.getElementById("ConfirmPassword").value;
+        if (password !== confirmPassword) {
+            alert("Mật khẩu xác nhận không khớp!");
+            return false;
+        }
+        return true;
+    }
+</script>
+<style>
+    form {
+        width: 528px;
+        display: block;
+        box-sizing: border-box;
+        font-size: 16px;
+        font-family: "Josefin Sans", sans-serif;
+        font-weight: 400;
+        line-height: 24.8px;
+    }
+
+        form input,
+        form button {
+            height: 40px;
+        }
+</style>

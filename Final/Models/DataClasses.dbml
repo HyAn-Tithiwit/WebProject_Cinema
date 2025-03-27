@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CinemaBookingSystem" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Cinemas" Member="Cinemas">
+    <Type Name="Cinema">
+      <Column Name="CinemaID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Cinema_OrderDetail" Member="OrderDetails" ThisKey="CinemaID" OtherKey="CinemaID" Type="OrderDetail" />
+      <Association Name="Cinema_Room" Member="Rooms" ThisKey="CinemaID" OtherKey="CinemaID" Type="Room" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Customers" Member="Customers">
+    <Type Name="Customer">
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PasswordHash" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="Customer_Order" Member="Orders" ThisKey="CustomerID" OtherKey="CustomerID" Type="Order" />
+      <Association Name="Customer_TemporaryReservation" Member="TemporaryReservations" ThisKey="CustomerID" OtherKey="CustomerID" Type="TemporaryReservation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Foods" Member="Foods">
+    <Type Name="Food">
+      <Column Name="FoodID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FoodName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Food_OrderDetail" Member="OrderDetails" ThisKey="FoodID" OtherKey="FoodID" Type="OrderDetail" />
+      <Association Name="Food_TemporaryReservation" Member="TemporaryReservations" ThisKey="FoodID" OtherKey="FoodID" Type="TemporaryReservation" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Movies" Member="Movies">
+    <Type Name="Movy">
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Duration" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Genre" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ReleaseDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="AgeRating" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Image" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="TrailerLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Association Name="Movy_OrderDetail" Member="OrderDetails" ThisKey="MovieID" OtherKey="MovieID" Type="OrderDetail" />
+      <Association Name="Movy_Screening" Member="Screenings" ThisKey="MovieID" OtherKey="MovieID" Type="Screening" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderDetails" Member="OrderDetails">
+    <Type Name="OrderDetail">
+      <Column Name="OrderDetailID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ItemType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CinemaID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SeatID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ScreeningTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TicketTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FoodID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MovieTitle" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CinemaName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SeatNumber" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="TicketTypeName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ScreeningID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Cinema_OrderDetail" Member="Cinema" ThisKey="CinemaID" OtherKey="CinemaID" Type="Cinema" IsForeignKey="true" />
+      <Association Name="Food_OrderDetail" Member="Food" ThisKey="FoodID" OtherKey="FoodID" Type="Food" IsForeignKey="true" />
+      <Association Name="Movy_OrderDetail" Member="Movy" ThisKey="MovieID" OtherKey="MovieID" Type="Movy" IsForeignKey="true" />
+      <Association Name="Order_OrderDetail" Member="Order" ThisKey="OrderID" OtherKey="OrderID" Type="Order" IsForeignKey="true" />
+      <Association Name="Screening_OrderDetail" Member="Screening" ThisKey="ScreeningID" OtherKey="ScreeningID" Type="Screening" IsForeignKey="true" />
+      <Association Name="Seat_OrderDetail" Member="Seat" ThisKey="SeatID" OtherKey="SeatID" Type="Seat" IsForeignKey="true" />
+      <Association Name="TicketType_OrderDetail" Member="TicketType" ThisKey="TicketTypeID" OtherKey="TicketTypeID" Type="TicketType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Order">
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="TotalAmount" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="PaymentStatus" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ScreeningID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Order_OrderDetail" Member="OrderDetails" ThisKey="OrderID" OtherKey="OrderID" Type="OrderDetail" />
+      <Association Name="Customer_Order" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Association Name="Screening_Order" Member="Screening" ThisKey="ScreeningID" OtherKey="ScreeningID" Type="Screening" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rooms" Member="Rooms">
+    <Type Name="Room">
+      <Column Name="RoomID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CinemaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoomName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="SeatCapacity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Room_Screening" Member="Screenings" ThisKey="RoomID" OtherKey="RoomID" Type="Screening" />
+      <Association Name="Room_Seat" Member="Seats" ThisKey="RoomID" OtherKey="RoomID" Type="Seat" />
+      <Association Name="Cinema_Room" Member="Cinema" ThisKey="CinemaID" OtherKey="CinemaID" Type="Cinema" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Screenings" Member="Screenings">
+    <Type Name="Screening">
+      <Column Name="ScreeningID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoomID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="AvailableSeats" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ScreeningDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Screening_OrderDetail" Member="OrderDetails" ThisKey="ScreeningID" OtherKey="ScreeningID" Type="OrderDetail" />
+      <Association Name="Screening_Order" Member="Orders" ThisKey="ScreeningID" OtherKey="ScreeningID" Type="Order" />
+      <Association Name="Screening_TemporaryReservation" Member="TemporaryReservations" ThisKey="ScreeningID" OtherKey="ScreeningID" Type="TemporaryReservation" />
+      <Association Name="Movy_Screening" Member="Movy" ThisKey="MovieID" OtherKey="MovieID" Type="Movy" IsForeignKey="true" />
+      <Association Name="Room_Screening" Member="Room" ThisKey="RoomID" OtherKey="RoomID" Type="Room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Seats" Member="Seats">
+    <Type Name="Seat">
+      <Column Name="SeatID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoomID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SeatNumber" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="RowNumber" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="ColumnNumber" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ReservedUntil" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Seat_OrderDetail" Member="OrderDetails" ThisKey="SeatID" OtherKey="SeatID" Type="OrderDetail" />
+      <Association Name="Seat_TemporaryReservation" Member="TemporaryReservations" ThisKey="SeatID" OtherKey="SeatID" Type="TemporaryReservation" />
+      <Association Name="Room_Seat" Member="Room" ThisKey="RoomID" OtherKey="RoomID" Type="Room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TemporaryReservations" Member="TemporaryReservations">
+    <Type Name="TemporaryReservation">
+      <Column Name="ReservationID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SessionID" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ScreeningID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MovieID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MovieTitle" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CinemaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CinemaName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="SeatID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SeatNumber" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TicketTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TicketTypeName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Column Name="ItemType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FoodID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ScreeningTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ExpirationTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Customer_TemporaryReservation" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Association Name="Food_TemporaryReservation" Member="Food" ThisKey="FoodID" OtherKey="FoodID" Type="Food" IsForeignKey="true" />
+      <Association Name="Screening_TemporaryReservation" Member="Screening" ThisKey="ScreeningID" OtherKey="ScreeningID" Type="Screening" IsForeignKey="true" />
+      <Association Name="Seat_TemporaryReservation" Member="Seat" ThisKey="SeatID" OtherKey="SeatID" Type="Seat" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TicketTypes" Member="TicketTypes">
+    <Type Name="TicketType">
+      <Column Name="TicketTypeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TypeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultPrice" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="TicketType_OrderDetail" Member="OrderDetails" ThisKey="TicketTypeID" OtherKey="TicketTypeID" Type="OrderDetail" />
+    </Type>
+  </Table>
+</Database>

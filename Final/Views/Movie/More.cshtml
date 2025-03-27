@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "More";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Thông tin phim + Trailer (như bạn đã có) -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Cột hình ảnh chiếm 6 phần -->
+        <div class="col-md-6 text-center">
+            <img src="@Model.Image" alt="@Model.Title" class="img-fluid rounded movie-poster" />
+        </div>
+        <!-- Cột nội dung chiếm 4 phần -->
+        <div class="col-md-6">
+            <h2><strong>@Model.Title</strong> <span class="badge bg-secondary">@Model.AgeRating</span></h2>
+            <ul class="list-unstyled">
+                <li><strong>Thể loại:</strong> @Model.Genre</li>
+                <li><strong>Thời lượng:</strong> @Model.Duration phút</li>
+                <li><strong>Ngày phát hành:</strong> @(Model.ReleaseDate?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")</li>
+            </ul>
+            <p class="movie-description"><h3>NỘI DUNG PHIM: </h3>@Model.Description</p>
+
+            @if (!string.IsNullOrEmpty(Model.TrailerLink))
+            {
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#trailerModal" data-trailer="@Model.TrailerLink">
+                    Xem Trailer
+                </button>
+            }
+            <a href="@Url.Action("Index", "Movie")" class="btn btn-primary">Quay lại</a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Trailer -->
+<div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="trailerModalLabel">Trailer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <iframe id="trailerFrame" height="400" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Script cho modal trailer
+    document.addEventListener("DOMContentLoaded", function () {
+        var trailerModal = document.getElementById('trailerModal');
+        var trailerFrame = document.getElementById('trailerFrame');
+
+        trailerModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var trailerUrl = button.getAttribute('data-trailer');
+
+            if (trailerUrl.includes("youtu.be")) {
+                var videoId = trailerUrl.split('/').pop();
+                trailerUrl = "https://www.youtube.com/embed/" + videoId;
+            } else if (trailerUrl.includes("watch?v=")) {
+                trailerUrl = trailerUrl.replace("watch?v=", "embed/");
+            }
+            trailerFrame.src = trailerUrl;
+        });
+
+        trailerModal.addEventListener('hidden.bs.modal', function () {
+            trailerFrame.src = "";
+        });
+    });
+</script>
+

@@ -1,0 +1,367 @@
+﻿@model Final.Models.HomeIndexViewModel
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BANNER SECTION -->
+<div class="banner-section position-relative">
+    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Banner 1 -->
+            <div class="carousel-item active">
+                <img src="~/Content/Images/banner1.jpg" class="d-block w-100" alt="Banner 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="@Url.Action("Detail", "Movie", new { id = 1 })" class="btn btn-danger">
+                        🎟 Đặt Vé
+                    </a>
+                </div>
+            </div>
+            <!-- Banner 2 -->
+            <div class="carousel-item">
+                <img src="~/Content/Images/banner2.jpg" class="d-block w-100" alt="Banner 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="@Url.Action("Detail", "Movie", new { id = 5 })" class="btn btn-danger">
+                        🎟 Đặt Vé
+                    </a>
+                </div>
+            </div>
+            <!-- Banner 3 -->
+            <div class="carousel-item">
+                <img src="~/Content/Images/banner3.jpg" class="d-block w-100" alt="Banner 3">
+                <div class="carousel-caption d-none d-md-block">
+                    <a href="@Url.Action("Detail", "Movie", new { id = 21 })" class="btn btn-danger">
+                        🎟 Đặt Vé
+                    </a>
+                </div>
+            </div>
+            <!-- Add more banners if needed -->
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
+
+<!-- QUICK BOOKING SECTION -->
+<!--<div class="quick-booking bg-dark text-white p-3 mt-3">
+    <h4>Đặt phim nhanh</h4>
+    <div class="row g-3 align-items-center">-->
+        <!-- Cinema Dropdown -->
+        <!--<div class="col-auto">
+            <label for="selectCinema" class="col-form-label">Chọn Rạp</label>
+        </div>
+        <div class="col-auto">
+            <select id="selectCinema" class="form-select">
+                <option value="">-- Chọn Rạp --</option>
+            </select>
+        </div>-->
+        <!-- Movie Dropdown -->
+        <!--<div class="col-auto">
+            <label for="selectMovie" class="col-form-label">Chọn Phim</label>
+        </div>
+        <div class="col-auto">
+            <select id="selectMovie" class="form-select" disabled>
+                <option value="">-- Chọn Phim --</option>
+            </select>
+        </div>-->
+        <!-- Date Dropdown -->
+        <!--<div class="col-auto">
+            <label for="selectDate" class="col-form-label">Chọn Ngày</label>
+        </div>
+        <div class="col-auto">
+            <select id="selectDate" class="form-select" disabled>
+                <option value="">-- Chọn Ngày --</option>
+            </select>
+        </div>-->
+        <!-- Showtime Dropdown -->
+        <!--<div class="col-auto">
+            <label for="selectShowtime" class="col-form-label">Chọn Suất</label>
+        </div>
+        <div class="col-auto">
+            <select id="selectShowtime" class="form-select" disabled>
+                <option value="">-- Chọn Suất --</option>
+            </select>
+        </div>-->
+        <!-- Booking Button -->
+        <!--<div class="col-auto">
+            <button id="quickBookingBtn" class="btn btn-primary" disabled>Đặt ngay</button>
+        </div>
+    </div>
+</div>-->
+
+<!-- PHIM ĐANG CHIẾU SECTION -->
+<div class="container my-5">
+    <h2 class="text-center">🎬 Phim Đang Chiếu</h2>
+    <div class="row">
+        @foreach (var movie in Model.NowShowing)
+        {
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="movie-card border rounded p-2 text-center shadow">
+                    @if (!string.IsNullOrEmpty(movie.AgeRating))
+                    {
+                        <span class="badge bg-warning">@movie.AgeRating</span>
+                    }
+                    <p>@movie.Genre</p>
+                    <div class="movie-poster position-relative overflow-hidden">
+                        <img src="@movie.Image" alt="@movie.Title" class="img-fluid rounded" style="width: 100%; height: 400px; object-fit: cover; transition: transform 0.3s ease;" />
+                    </div>
+                    <div class="movie-info d-flex flex-column" style="height: 100%; justify-content: space-between;">
+                        <h5 class="fw-bold" style="min-height: 48px; display: flex; align-items: center;">@movie.Title</h5>
+                        <div class="info-action" style="display: grid; gap: 10px;">
+                            <button class="btn btn-primary btn-trailer" data-trailer="@movie.TrailerLink" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                                Xem Trailer
+                            </button>
+                            <a href="@Url.Action("Detail", "Movie", new { id = movie.MovieID })" class="btn btn-danger">
+                                🎟 Đặt Vé
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Phân trang cho phim đang chiếu -->
+    <div class="text-center">
+        @Html.PagedListPager(Model.NowShowing, page => Url.Action("Index", new { pageNowShowing = page, pageComingSoon = Model.ComingSoon.PageNumber }))
+    </div>
+    <div class="text-center mt-3">
+        <a href="@Url.Action("Show", "Movie", new { category = "NowShowing" })" class="btn btn-outline-primary">🔍 Xem Thêm</a>
+    </div>
+</div>
+
+<!-- PHIM SẮP CHIẾU SECTION -->
+<div class="container my-5">
+    <h2 class="text-center">🎬 Phim Sắp Chiếu</h2>
+    <div class="row">
+        @foreach (var movie in Model.ComingSoon)
+        {
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="movie-card border rounded p-2 text-center shadow">
+                    @if (!string.IsNullOrEmpty(movie.AgeRating))
+                    {
+                        <span class="badge bg-warning">@movie.AgeRating</span>
+                    }
+                    <p>@movie.Genre</p>
+                    <div class="movie-poster position-relative overflow-hidden">
+                        <img src="@movie.Image" alt="@movie.Title" class="img-fluid rounded" style="width: 100%; height: 400px; object-fit: cover; transition: transform 0.3s ease;" />
+                    </div>
+                    <div class="date-premiere">
+                        🎬 Khởi chiếu: @movie.ReleaseDate
+                    </div>
+                    <div class="movie-info d-flex flex-column" style="height: 100%; justify-content: space-between;">
+                        <h5 class="fw-bold" style="min-height: 48px; display: flex; align-items: center;">@movie.Title</h5>
+                    </div>
+                    <div class="info-action" style="display: grid; gap: 10px;">
+                        <button class="btn btn-primary btn-trailer" data-trailer="@movie.TrailerLink" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                            Xem Trailer
+                        </button>
+                        <a href="@Url.Action("More", "Movie", new { id = movie.MovieID })" class="btn btn-danger">
+                            🔍 Tìm Hiểu Thêm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- Phân trang cho phim sắp chiếu -->
+    <div class="text-center">
+        @Html.PagedListPager(Model.ComingSoon, page => Url.Action("Index", new { pageNowShowing = Model.NowShowing.PageNumber, pageComingSoon = page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+    </div>
+    <div class="text-center mt-3">
+        <a href="@Url.Action("Show", "Movie", new { category = "ComingSoon" })" class="btn btn-outline-primary">🔍 Xem Thêm</a>
+    </div>
+</div>
+
+<!-- Modal Trailer -->
+<div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="trailerModalLabel">Trailer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <iframe id="trailerFrame" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+    /* Custom pagination styling */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 15px 0;
+    }
+
+        .pagination li {
+            list-style: none;
+        }
+
+            .pagination li a, .pagination li span {
+                display: inline-block;
+                padding: 8px 14px;
+                border-radius: 6px;
+                border: 1px solid #ddd;
+                color: #0dcaf0;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+
+                .pagination li a:hover {
+                    background-color: #dc3545;
+                    color: white;
+                }
+
+        .pagination .active span {
+            background-color: #dc3545;
+            font-weight: bold;
+            border: 1px solid #dc3545;
+        }
+
+        .pagination .disabled span {
+            background-color: #e9ecef;
+            color: #6c757d;
+            cursor: not-allowed;
+        }
+
+    #trailerFrame {
+        width: 100%;
+        height: 60vh;
+        max-height: 500px;
+    }
+</style>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Trailer modal handling
+            document.addEventListener("DOMContentLoaded", function () {
+                var trailerModal = document.getElementById('trailerModal');
+                var trailerFrame = document.getElementById('trailerFrame');
+
+                trailerModal.addEventListener('show.bs.modal', function (event) {
+                    var button = event.relatedTarget;
+                    var trailerUrl = button.getAttribute('data-trailer');
+
+                    // Convert YouTube URL to embed format
+                    if (trailerUrl.includes("youtu.be")) {
+                        var videoId = trailerUrl.split('/').pop();
+                        trailerUrl = "https://www.youtube.com/embed/" + videoId;
+                    } else if (trailerUrl.includes("watch?v=")) {
+                        trailerUrl = trailerUrl.replace("watch?v=", "embed/");
+                    }
+                    trailerFrame.src = trailerUrl;
+                });
+
+                trailerModal.addEventListener('hidden.bs.modal', function () {
+                    trailerFrame.src = "";
+                });
+            });
+
+            // Quick Booking Scripts
+            // Load cinemas on page load
+            $.getJSON('@Url.Action("GetCinemas", "Movie")', function (data) {
+                var options = '<option value="">-- Chọn Rạp --</option>';
+                $.each(data, function (i, cinema) {
+                    options += '<option value="' + cinema.CinemaID + '">' + cinema.Name + ' - ' + cinema.Address + '</option>';
+                });
+                $('#selectCinema').html(options);
+            });
+
+            // When a cinema is selected, load movies for that cinema
+            $('#selectCinema').change(function () {
+                var cinemaId = $(this).val();
+                $('#selectMovie').html('<option value="">-- Chọn Phim --</option>');
+                $('#selectDate, #selectShowtime').html('<option value="">-- Chọn Ngày/Suất --</option>');
+                $('#selectMovie').prop('disabled', true);
+                $('#selectDate').prop('disabled', true);
+                $('#selectShowtime').prop('disabled', true);
+                $('#quickBookingBtn').prop('disabled', true);
+
+                if (cinemaId) {
+                    $.getJSON('@Url.Action("GetMoviesByCinema", "Movie")', { cinemaId: cinemaId }, function (data) {
+                        var options = '<option value="">-- Chọn Phim --</option>';
+                        $.each(data, function (i, movie) {
+                            options += '<option value="' + movie.MovieID + '">' + movie.Title + '</option>';
+                        });
+                        $('#selectMovie').html(options).prop('disabled', false);
+                    });
+                }
+            });
+
+            // When a movie is selected, load available dates for that movie
+            $('#selectMovie').change(function () {
+                var movieId = $(this).val();
+                $('#selectDate, #selectShowtime').html('<option value="">-- Chọn Ngày/Suất --</option>');
+                $('#selectDate').prop('disabled', true);
+                $('#selectShowtime').prop('disabled', true);
+                $('#quickBookingBtn').prop('disabled', true);
+
+                if (movieId) {
+                    $.getJSON('@Url.Action("GetDatesByMovie", "Movie")', { movieId: movieId }, function (data) {
+                        var options = '<option value="">-- Chọn Ngày --</option>';
+                        $.each(data, function (i, date) {
+                            options += '<option value="' + date + '">' + date + '</option>';
+                        });
+                        $('#selectDate').html(options).prop('disabled', false);
+                    });
+                }
+            });
+
+            // When a date is selected, load showtimes for the selected movie and date
+            $('#selectDate').change(function () {
+                var movieId = $('#selectMovie').val();
+                var date = $(this).val();
+                $('#selectShowtime').html('<option value="">-- Chọn Suất --</option>');
+                $('#selectShowtime').prop('disabled', true);
+                $('#quickBookingBtn').prop('disabled', true);
+
+                if (movieId && date) {
+                    $.getJSON('@Url.Action("GetShowtimesByDate", "Movie")', { movieId: movieId, date: date }, function (data) {
+                        var options = '<option value="">-- Chọn Suất --</option>';
+                        $.each(data, function (i, showtime) {
+                            options += '<option value="' + showtime + '">' + showtime + '</option>';
+                        });
+                        $('#selectShowtime').html(options).prop('disabled', false);
+                    });
+                }
+            });
+
+            // Enable the booking button when a showtime is selected
+            $('#selectShowtime').change(function () {
+                var showtime = $(this).val();
+                $('#quickBookingBtn').prop('disabled', !showtime);
+            });
+
+            // When the "Đặt ngay" button is clicked, redirect with the selected parameters.
+            $('#quickBookingBtn').click(function () {
+                var cinemaId = $('#selectCinema').val();
+                var movieId = $('#selectMovie').val();
+                var date = $('#selectDate').val();
+                var showtime = $('#selectShowtime').val();
+
+                if (cinemaId && movieId && date && showtime) {
+                    // Build a query string for redirection
+                    var url = '@Url.Action("Show", "Movie")' + '?cinemaId=' + cinemaId + '&movieId=' + movieId + '&date=' + date + '&showtime=' + showtime;
+                    window.location.href = url;
+                } else {
+                    alert("Vui lòng chọn đầy đủ các mục: Rạp, Phim, Ngày và Suất chiếu.");
+                }
+            });
+        });
+    </script>
+}

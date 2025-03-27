@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Final.Models.TicketType>
+
+@{
+    ViewBag.Title = "TicketPrice";
+    Layout = "~/Views/Shared/View.cshtml";
+
+}
+
+<h2>TicketPrice</h2>
+
+<!-- BANNER SECTION -->
+<div class="banner-section position-relative">
+    <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Banner 1 -->
+            <div class="carousel-item active">
+                <img src="~/Content/Images/ticket1.png" class="d-block w-100" alt="Banner 1">
+                
+            </div>
+            <!-- Banner 2 -->
+            <div class="carousel-item">
+                <img src="~/Content/Images/ticket2.png" class="d-block w-100" alt="Banner 2">
+                
+            </div>
+            <!-- Banner 3 -->
+            <div class="carousel-item">
+                <img src="~/Content/Images/ticket3.png" class="d-block w-100" alt="Banner 3">
+                
+            </div>
+            <!-- Thêm banner nếu cần -->
+        </div>
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>
+</div>
+
+<!-- Nếu đây là PartialView, không cần script chung; nếu là View chính, thêm các script Bootstrap (nếu chưa có) -->
+@section scripts {
+    <!-- Nếu bạn chưa có bundle bootstrap/js, có thể thêm: -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+}

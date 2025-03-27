@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Final.Models.TemporaryReservation>
+
+@{
+    ViewBag.Title = "TempReservationsCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Giỏ hàng tạm thời</h2>
+
+@if (!Model.Any())
+{
+    <p>Giỏ hàng của bạn hiện không có sản phẩm tạm lưu.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mã đặt chỗ</th>
+                <th>Phim</th>
+                <th>Rạp</th>
+                <th>Ghế</th>
+                <th>Loại vé</th>
+                <th>Giá</th>
+                <th>Suất chiếu</th>
+                <th>Thời gian còn lại</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ReservationID</td>
+                    <td>@item.MovieTitle</td>
+                    <td>@item.CinemaName</td>
+                    <td>@(string.IsNullOrEmpty(item.SeatNumber) ? "-" : item.SeatNumber)</td>
+                    <td>@(string.IsNullOrEmpty(item.TicketTypeName) ? "-" : item.TicketTypeName)</td>
+                    <td>@item.Price VNĐ</td>
+                    <td>@item.ScreeningTime.ToString("HH:mm dd/MM/yyyy")</td>
+                    <td>
+                        @if (item.ExpirationTime.HasValue && item.ExpirationTime.Value >= new DateTime(1753, 1, 1))
+                        {
+                            <span class="countdown" data-expire="@item.ExpirationTime.Value.ToString("yyyy-MM-ddTHH:mm:ss")"></span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Không hợp lệ</span>
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Checkout button -->
+    <button id="checkoutBtn" class="btn btn-success">Thanh toán</button>
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        let sessionId = sessionStorage.getItem('sessionId');
+
+        if (!sessionId) {
+            sessionId = 'guest_' + new Date().getTime(); // Tạo sessionId mới nếu chưa có
+            sessionStorage.setItem('sessionId', sessionId);
+        }
+
+        console.log("🛒 Session ID:", sessionId);
+
+        // Cập nhật thời gian giữ vé
+        function updateCountdown() {
+            $('.countdown').each(function () {
+                var expireStr = $(this).data('expire');
+                var expireDate = new Date(expireStr);
+                var now = new Date();
+                var diff = Math.floor((expireDate - now) / 1000);
+
+                if (diff <= 0) {
+                    $(this).text("Hết hạn");
+                } else {
+                    var minutes = Math.floor(diff / 60);
+                    var seconds = diff % 60;
+                    $(this).text(minutes + "m " + seconds + "s");
+                }
+            });
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Xử lý nút thanh toán
+        $("#checkoutBtn").click(function () {
+            $.post('@Url.Action("Checkout", "Order")', { sessionId: sessionId }, function (response) {
+                if (response.success) {
+                    alert("Thanh toán thành công!");
+                    window.location.href = '@Url.Action("OrderHistory", "Order")';
+                } else {
+                    alert("Lỗi thanh toán: " + response.message);
+                }
+            }).fail(function (xhr) {
+                alert("Lỗi hệ thống: " + xhr.responseText);
+            });
+        });
+    });
+    </script>
+
+}

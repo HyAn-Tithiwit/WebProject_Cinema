@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Final.Models.CartItemViewModel>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cart</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info text-center">Giỏ hàng của bạn đang trống.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Loại</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Phim</th>
+                <th>Rạp</th>
+                <th>Ghế</th>
+                <th>Đồ ăn</th>
+                <th>Suất chiếu</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ItemType</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price.ToString("N0") đ</td>
+                    <td>@item.MovieTitle</td>
+                    <td>@item.CinemaName</td>
+                    <td>@item.SeatNumber</td>
+                    <td>@item.FoodName</td>
+                    <td>@(item.ScreeningTime.HasValue ? item.ScreeningTime.Value.ToString("HH:mm dd/MM/yyyy") : "N/A")</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm remove-item" data-id="@item.OrderDetailID">
+                            <i class="fa fa-trash"></i> Xóa
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <button class="btn btn-success" id="btnCheckout">
+            <i class="fa fa-credit-card"></i> Thanh Toán
+        </button>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $(".remove-item").click(function () {
+            var itemId = $(this).data("id");
+            if (confirm("Bạn có chắc muốn xóa món này khỏi giỏ hàng?")) {
+                $.post("/Cart/RemoveItem", { id: itemId }, function (data) {
+                    if (data.success) {
+                        location.reload(); // Load lại trang sau khi xóa
+                    } else {
+                        alert("Lỗi khi xóa, thử lại!");
+                    }
+                });
+            }
+        });
+
+        $("#btnCheckout").click(function () {
+            if (confirm("Bạn có chắc muốn thanh toán giỏ hàng?")) {
+                $.post("/Cart/Checkout", function (data) {
+                    if (data.success) {
+                        alert("Thanh toán thành công!");
+                        window.location.href = "/Order/History"; // Điều hướng đến lịch sử đơn hàng
+                    } else {
+                        alert(data.message);
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Final.Models.OrderViewModel>
+
+@{
+    ViewBag.Title = "Lịch sử đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lịch sử đơn hàng</h2>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var order in Model)
+    {
+        <div class="order">
+            <h3>Đơn hàng: @order.OrderID</h3>
+            <p>Ngày đặt: @order.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+            <p>Trạng thái: @order.PaymentStatus</p>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Loại</th>
+                        <th>Phim</th>
+                        <th>Rạp</th>
+                        <th>Ghế</th>
+                        <th>Suất chiếu</th>
+                        <th>Loại vé</th>
+                        <th>Tên món ăn</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in order.OrderDetails)
+                    {
+                        <tr>
+                            <td>@detail.ItemType</td>
+                            <td>@detail.MovieTitle</td>
+                            <td>@detail.CinemaName</td>
+                            <td>@detail.SeatNumber</td>
+                            <td>@(detail.ScreeningTime?.ToString("HH:mm dd/MM/yyyy") ?? "Chưa có")</td>
+                            <td>@detail.TicketTypeName</td>
+                            <td>
+                                @(detail.ItemType == "Food" ? detail.FoodName : "-")
+                            </td>
+                            <td>@detail.Quantity</td>
+                            <td>@detail.Price.ToString("N0") VND</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <p><strong>Tổng tiền đơn hàng:</strong> @order.TotalAmount.ToString("N0") VND</p>
+        </div>
+        <hr />
+    }
+}
+else
+{
+    <p>Không có đơn hàng nào.</p>
+}
