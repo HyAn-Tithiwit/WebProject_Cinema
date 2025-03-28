@@ -43,7 +43,9 @@
                             <td>
                                 @(detail.ItemType == "Food" ? detail.FoodName : "-")
                             </td>
-                            <td>@detail.Quantity</td>
+                            <td>
+                                @(detail.ItemType == "Food" ? detail.FoodQuantity : detail.Quantity)
+                            </td>
                             <td>@detail.Price.ToString("N0") VND</td>
                         </tr>
                     }

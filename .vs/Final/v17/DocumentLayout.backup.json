@@ -3,11 +3,19 @@
   "WorkspaceRootPath": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\movie\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\movie\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|c:\\users\\dell\\desktop\\midterm\\final\\final\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|c:\\users\\dell\\desktop\\midterm\\final\\final\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\order\\temporarycart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\order\\temporarycart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\models\\tempcartviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\models\\tempcartviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\controllers\\moviecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -15,20 +23,24 @@
       "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\order\\orderhistory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\order\\tempreservationscart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\order\\tempreservationscart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\models\\tempcartviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\models\\tempcartviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\place\\ticketprice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\place\\ticketprice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\models\\homeindexviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\models\\homeindexviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\controllers\\placecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\controllers\\placecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\movie\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\movie\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\models\\orderviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,20 +51,8 @@
       "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\models\\orderdetailviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\controllers\\placecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\controllers\\placecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\place\\ticketprice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\place\\ticketprice.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|solutionrelative:final\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5335F290-14FD-4FAF-B99A-E9D06E8967E2}|Final\\Final.csproj|C:\\Users\\Dell\\Desktop\\Midterm\\Final\\final\\views\\place\\comingsoon.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -70,17 +70,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "OrderController.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "Final\\Controllers\\OrderController.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Controllers\\OrderController.cs",
-              "RelativeToolTip": "Final\\Controllers\\OrderController.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAIAxwGUAAACSAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Controllers\\OrderController.cs*",
+              "RelativeToolTip": "Final\\Controllers\\OrderController.cs*",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAYwKgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-25T14:15:35.865Z",
               "IsPinned": true,
@@ -88,13 +88,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MovieController.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Controllers\\MovieController.cs",
               "RelativeDocumentMoniker": "Final\\Controllers\\MovieController.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Controllers\\MovieController.cs",
               "RelativeToolTip": "Final\\Controllers\\MovieController.cs",
-              "ViewState": "AgIAAJ4BAAAAAAAAAAAAAIwBAAArAAAAAAAAAA==",
+              "ViewState": "AgIAACYCAAAAAAAAAAAIwDQCAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-22T10:11:10.949Z",
               "IsPinned": true,
@@ -102,7 +102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 7,
               "Title": "PlaceController.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Controllers\\PlaceController.cs",
               "RelativeDocumentMoniker": "Final\\Controllers\\PlaceController.cs",
@@ -116,61 +116,71 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 9,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Final\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Final\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAAAMoAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAKQAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-22T11:59:40.884Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "OrderDetailViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Models\\OrderDetailViewModel.cs",
               "RelativeDocumentMoniker": "Final\\Models\\OrderDetailViewModel.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Models\\OrderDetailViewModel.cs",
               "RelativeToolTip": "Final\\Models\\OrderDetailViewModel.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAQwAwAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-27T03:51:35.054Z",
-              "IsPinned": true,
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TemporaryCart.cshtml",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Order\\TemporaryCart.cshtml",
+              "RelativeDocumentMoniker": "Final\\Views\\Order\\TemporaryCart.cshtml",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Order\\TemporaryCart.cshtml*",
+              "RelativeToolTip": "Final\\Views\\Order\\TemporaryCart.cshtml*",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAAAJcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-27T14:05:58.797Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "TempCartViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Models\\TempCartViewModel.cs",
               "RelativeDocumentMoniker": "Final\\Models\\TempCartViewModel.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Models\\TempCartViewModel.cs",
               "RelativeToolTip": "Final\\Models\\TempCartViewModel.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAA8wCAAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-27T03:52:08.972Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "OrderViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Models\\OrderViewModel.cs",
               "RelativeDocumentMoniker": "Final\\Models\\OrderViewModel.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Models\\OrderViewModel.cs",
               "RelativeToolTip": "Final\\Models\\OrderViewModel.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T03:51:52.273Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-27T03:51:52.273Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Final\\Controllers\\HomeController.cs",
@@ -178,8 +188,7 @@
               "RelativeToolTip": "Final\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAzwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T14:34:42.288Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T14:34:42.288Z"
             },
             {
               "$type": "Document",
@@ -189,7 +198,7 @@
               "RelativeDocumentMoniker": "Final\\Models\\HomeIndexViewModel.cs",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Models\\HomeIndexViewModel.cs",
               "RelativeToolTip": "Final\\Models\\HomeIndexViewModel.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAgwDoAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T12:30:53.084Z",
               "EditorCaption": ""
@@ -197,45 +206,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "TempReservationsCart.cshtml",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Order\\TempReservationsCart.cshtml",
-              "RelativeDocumentMoniker": "Final\\Views\\Order\\TempReservationsCart.cshtml",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Order\\TempReservationsCart.cshtml",
-              "RelativeToolTip": "Final\\Views\\Order\\TempReservationsCart.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-26T09:58:38.52Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "OrderHistory.cshtml",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Order\\OrderHistory.cshtml",
               "RelativeDocumentMoniker": "Final\\Views\\Order\\OrderHistory.cshtml",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Order\\OrderHistory.cshtml",
               "RelativeToolTip": "Final\\Views\\Order\\OrderHistory.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAADAAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-25T14:06:17.365Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 8,
               "Title": "Detail.cshtml",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Movie\\Detail.cshtml",
               "RelativeDocumentMoniker": "Final\\Views\\Movie\\Detail.cshtml",
               "ToolTip": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Movie\\Detail.cshtml",
               "RelativeToolTip": "Final\\Views\\Movie\\Detail.cshtml",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAAAJMAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAOAAAAAAAAAAAAAAAPYAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-25T10:01:50.565Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 5,
               "Title": "TicketPrice.cshtml",
               "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\Midterm\\Final\\Final\\Views\\Place\\TicketPrice.cshtml",
               "RelativeDocumentMoniker": "Final\\Views\\Place\\TicketPrice.cshtml",
@@ -256,8 +252,7 @@
               "RelativeToolTip": "Final\\Views\\Place\\ComingSoon.cshtml",
               "ViewState": "AgIAAEYAAAAAAAAAAAAwwGsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-25T13:01:05.594Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T13:01:05.594Z"
             },
             {
               "$type": "Document",
@@ -269,8 +264,7 @@
               "RelativeToolTip": "Final\\Views\\Place\\NowShowing.cshtml",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAACMAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-25T13:00:54.076Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-25T13:00:54.076Z"
             }
           ]
         }

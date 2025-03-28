@@ -31,5 +31,6 @@ namespace Final.Models
         public DateTime? ExpirationTime { get; set; }
         public string FoodName { get; set; }
         public int FoodQuantity { get; set; }
+        
     }
 }

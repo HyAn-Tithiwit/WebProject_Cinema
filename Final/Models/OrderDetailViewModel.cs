@@ -11,6 +11,7 @@ namespace Final.Models
         public string ItemType { get; set; } // "Seat" hoặc "Food"
         public int Quantity { get; set; }
         public decimal Price { get; set; }
+        public int? FoodQuantity { get; set; } // Ensure this is included
 
         // Nếu là vé xem phim
         public string MovieTitle { get; set; }

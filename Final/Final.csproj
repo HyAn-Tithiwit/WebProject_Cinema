@@ -266,12 +266,12 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Order\Cart.cshtml" />
     <Content Include="Views\Movie\More.cshtml" />
-    <Content Include="Views\Order\TempReservationsCart.cshtml" />
     <Content Include="Views\Place\Detail.cshtml" />
     <Content Include="Views\Place\NowShowing.cshtml" />
     <Content Include="Views\Place\ComingSoon.cshtml" />
     <Content Include="Views\Place\TicketPrice.cshtml" />
     <Content Include="Views\Shared\View.cshtml" />
+    <Content Include="Views\Order\TemporaryCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
